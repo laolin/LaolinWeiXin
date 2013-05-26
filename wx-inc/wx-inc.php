@@ -92,6 +92,11 @@ class wechatCallbackapiTest
       }else {
         echo "Input something...";
       }
+      error_log(date("[Y-m-d H:i:s]")." -[".$_SERVER['REQUEST_URI']."] :".
+      "u:$fromUsername,t:$inType,k:$keyword/n", 3, 
+      
+       dirname( __FILE__ ).'/../'.'wx-'.TOKEN.'.log');
+      
     }else {
         echo "<img src='http://files.laolin.com/images/qrcode_for_laolin-jg.jpg'/>";
         exit;
