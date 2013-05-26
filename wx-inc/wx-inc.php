@@ -8,8 +8,12 @@ if( !defined('TOKEN') )die('pls define TOKEN first.');
 //  define("TOKEN", "defWeixinToken");//should be defined in 'wx-token.php'
 
 $wechatObj = new wechatCallbackapiTest();
-$wechatObj->valid();
 
+if(isset( $_GET["echostr"]) {
+  $wechatObj->valid();
+} else {
+  $wechatObj->responseMsg();
+}
 class wechatCallbackapiTest
 {
   public function valid() {
@@ -33,6 +37,7 @@ class wechatCallbackapiTest
       $fromUsername = $postObj->FromUserName;
       $toUsername = $postObj->ToUserName;
       $keyword = trim($postObj->Content);
+      $inType= trim($postObj->MsgType);
       $time = time();
       $textTpl = "<xml>
             <ToUserName><![CDATA[%s]]></ToUserName>
@@ -42,7 +47,12 @@ class wechatCallbackapiTest
             <Content><![CDATA[%s]]></Content>
             <FuncFlag>0</FuncFlag>
             </xml>";             
-      if(!empty( $keyword )) {
+      if($inType=='event') {
+        $msgType = "text";
+        $contentStr = "Thanks for your following (LaoLin-jg)!";
+        $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
+        echo $resultStr;
+      }else if(/*$inType=='event' && */ !empty( $keyword )) {
         $msgType = "text";
         $contentStr = "Welcome to wechat world!";
         $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
