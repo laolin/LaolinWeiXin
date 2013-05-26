@@ -87,10 +87,14 @@ class wechatCallbackapiTest
         $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
         echo $resultStr;
       }else if(/*$inType=='text' && */ !empty( $keyword )) {
-        //$msgType = "text";
-        //$contentStr = "Welcome to wechat world!";
-        //$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
-        $news=$this->replyNews(wechatLaolin::About($keyword));
+        $msgType = "text";
+        $contentStr = "欢迎关注老林!回复laolin了解老林简历，也可回复r1至r9直接了解老林的有关介绍条目";
+        $about=wechatLaolin::About($keyword);
+        if(count($about)){
+          $news=$this->replyNews($about);
+        }else{
+          $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
+        }
         $resultStr= sprintf($tplNews, $fromUsername, $toUsername, $time, $news['n'], $news['str']);
         
       error_log( "  #A# res=$resultStr\n", 

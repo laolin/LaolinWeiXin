@@ -13,28 +13,44 @@ class wechatLaolin {
       3, dirname( __FILE__ ).'/../'.'logwx-'.TOKEN.'.log');
     switch($b) {
         //使用lazyRest的API，直接读wordpress的指定 页面的数据
+      case 'r9':
       case 'contact':
         //我的Wordpress的联系页面的ID为4168
         return self::_showSomePost('ID=4168','联系方式');
         break;
       
+      case 'r1':
+        return self::_showSomePost('ID=4158','');
+      case 'r2':
+        return self::_showSomePost('ID=4138','');
+      case 'r3':
+        return self::_showSomePost('ID=4147','');
+      case 'r4':
+        return self::_showSomePost('ID=4153','');
+      
+      case 'r5':
       case 'projects':
         return self::_showSomePost('ID=4161','工程项目');
         break;
+      case 'r6':
       case 'awards':
         return self::_showSomePost('ID=4163','获奖情况');
         break;
+      case 'r7':
       case 'publications':
         return self::_showSomePost('ID=4165','发表论文');
         break;
+      case 'r8':
       case 'hobbies':
         return self::_showSomePost('ID=4180','兴趣爱好');
       
-      default:      
+      case 'laolin':      
         //使用lazyRest的API，直接读wordpress的指定page的全部子页面的数据
         //我的Wordpress的简历页面的ID为4132,这个页面内容没有用
         //所有的子页面对应简历的一个内容, 这些会由LazyREST api返回给本页面JSON数据
         return  self::_showSomePost('post_parent=4132&post_status=publish','林建萍(LaoLin) 同济大学建筑设计研究院（集团）有限公司 高级工程师 一级注册结构工程师');
+      default: 
+        return array();
     }  
   }
 
