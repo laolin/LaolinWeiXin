@@ -135,8 +135,8 @@ class wechatCallbackapiTest
         $value['PicUrl'],$value['Url']);
     }
     
-      error_log( "  #A# str=$strItem\n", 
-      3, dirname( __FILE__ ).'/../'.'logwx-'.TOKEN.'.log');
+     // error_log( "  #A# str=$strItem\n", 
+     // 3, dirname( __FILE__ ).'/../'.'logwx-'.TOKEN.'.log');
     $ret=array();
     $ret['n']=$n;
     $ret['str']=$strItem;

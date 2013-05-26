@@ -9,41 +9,50 @@ class wechatLaolin {
   
   static public function About($b) {  
   
-      error_log( "  ## b=$b, ", 
-      3, dirname( __FILE__ ).'/../'.'logwx-'.TOKEN.'.log');
+     // error_log( "  ## b=$b, ", 
+     // 3, dirname( __FILE__ ).'/../'.'logwx-'.TOKEN.'.log');
     switch($b) {
         //使用lazyRest的API，直接读wordpress的指定 页面的数据
-      case 'r9':
-      case 'contact':
-        //我的Wordpress的联系页面的ID为4168
-        return self::_showSomePost('ID=4168','联系方式');
-        break;
       
       case 'r1':
+      case 'rq':
         return self::_showSomePost('ID=4158','');
       case 'r2':
+      case 'rw':
         return self::_showSomePost('ID=4138','');
       case 'r3':
+      case 're':
         return self::_showSomePost('ID=4147','');
       case 'r4':
+      case 'rr':
         return self::_showSomePost('ID=4153','');
       
       case 'r5':
+      case 'rt':
       case 'projects':
         return self::_showSomePost('ID=4161','工程项目');
         break;
       case 'r6':
+      case 'ry':
       case 'awards':
         return self::_showSomePost('ID=4163','获奖情况');
         break;
       case 'r7':
+      case 'ru':
       case 'publications':
         return self::_showSomePost('ID=4165','发表论文');
         break;
       case 'r8':
+      case 'ri':
       case 'hobbies':
         return self::_showSomePost('ID=4180','兴趣爱好');
       
+      case 'r9':
+      case 'ro':
+      case 'contact':
+        return self::_showSomePost('ID=4168','联系方式');
+        break;
+        
       case 'laolin':      
         //使用lazyRest的API，直接读wordpress的指定page的全部子页面的数据
         //我的Wordpress的简历页面的ID为4132,这个页面内容没有用
@@ -63,8 +72,8 @@ class wechatLaolin {
       */
    static function _showSomePost($query,$title){  
   
-      error_log( " q=$query\n", 
-      3, dirname( __FILE__ ).'/../'.'logwx-'.TOKEN.'.log');
+     // error_log( " q=$query\n", 
+     // 3, dirname( __FILE__ ).'/../'.'logwx-'.TOKEN.'.log');
       
     $url='http://api.laolin.com/rest/api/wp4_posts/list/'.$query;
 
