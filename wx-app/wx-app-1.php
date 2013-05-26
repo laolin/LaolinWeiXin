@@ -61,10 +61,10 @@ class wechatLaolin {
     } else {
       foreach ($res['data']['items'] as $key => $row) {
         $item=array();
-        $item['Title']=$row['post_title'];
-        $item['Description']=$row['post_content'];
+        $item['Title']=htmlentities($row['post_title']);
+        $item['Description']=htmlentities($row['post_content']);
         $item['PicUrl']='http://files.laolin.com/images/linjp-2012.9.3-180x180.jpg';
-        $item['Url']='http://laolin.com/lin/?p='.$row['ID'];
+        $item['Url']=htmlentities('http://laolin.com/lin/?p='.$row['ID']);
         $dataPost[]=$item;
       }
     }
