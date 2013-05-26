@@ -55,6 +55,7 @@ class wechatLaolin {
     $rest=file_get_contents($url);
     $res=json_decode($rest,true);
     $dataPost=array();
+    $menu_order=array();
     if($res['err_code']!=0) {
       $dataPost[]=array('Title'=>'Error',
             'Description'=>'error code: ['.$res['err_code'].'] '.$res['err_msg']);
@@ -66,7 +67,10 @@ class wechatLaolin {
         $item['PicUrl']='http://files.laolin.com/images/linjp-2012.9.3-180x180.jpg';
         $item['Url']= 'http://laolin.com/lin/?page_id='.$row['ID'];
         $dataPost[]=$item;
+        $menu_order[$key]  = +$row['menu_order'];
       }
+      
+      array_multisort($menu_order, SORT_ASC, $$dataPost);
     }
     return $dataPost;
   }
