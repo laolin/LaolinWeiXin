@@ -92,10 +92,10 @@ class wechatCallbackapiTest
         $about=wechatLaolin::About($keyword);
         if(count($about)){
           $news=$this->replyNews($about);
+          $resultStr= sprintf($tplNews, $fromUsername, $toUsername, $time, $news['n'], $news['str']);
         }else{
           $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
         }
-        $resultStr= sprintf($tplNews, $fromUsername, $toUsername, $time, $news['n'], $news['str']);
         
       error_log( "  #A# res=$resultStr\n", 
       3, dirname( __FILE__ ).'/../'.'logwx-'.TOKEN.'.log');
