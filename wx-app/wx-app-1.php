@@ -63,7 +63,7 @@ class wechatLaolin {
       foreach ($res['data']['items'] as $key => $row) {
         $item=array();
         $item['Title']= $row['post_title'];
-        $item['Description']=htmlspecialchars($row['post_content'],ENT_QUOTES,'UTF-8');
+        $item['Description']=strip_tags($row['post_content'] );
         $item['PicUrl']='http://files.laolin.com/images/linjp-2012.9.3-180x180.jpg';
         $item['Url']= 'http://laolin.com/lin/?page_id='.$row['ID'];
         $dataPost[]=$item;
