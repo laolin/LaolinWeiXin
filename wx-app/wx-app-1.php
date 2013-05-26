@@ -70,7 +70,7 @@ class wechatLaolin {
         $menu_order[$key]  = +$row['menu_order'];
       }
       
-      array_multisort($menu_order, SORT_ASC, $$dataPost);
+      array_multisort($menu_order, SORT_ASC, $dataPost);
     }
     return $dataPost;
   }
