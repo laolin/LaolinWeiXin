@@ -82,7 +82,7 @@ class wechatCallbackapiTest
       3, dirname( __FILE__ ).'/../'.'logwx-'.TOKEN.'.log');
       
       
-      $contentStr = "欢迎关注老林的微信公众帐号。很高兴能通过这个平台与你交流。回复r1了解老林简历，也可回复r2至r9直接了解老林的其他介绍。";
+      $contentStr = "欢迎关注老林的微信公众帐号。很高兴能通过这个平台与你交流。回复r1了解老林简历，也可回复r2至r9了解老林的其他介绍。";
         
       if($inType=='event') {
         $msgType = "text";
