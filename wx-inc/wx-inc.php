@@ -38,7 +38,7 @@ class wechatCallbackapiTest
       $toUsername = $postObj->ToUserName;
       $keyword = trim($postObj->Content);
       $inType= trim($postObj->MsgType);
-      $Event=($inType=='event')?trim($postObj->Event):'NotEvent';
+      $Event=($inType=='event')?trim($postObj->Event):'xE';
       $time = time();
       $textTpl = "<xml>
             <ToUserName><![CDATA[%s]]></ToUserName>
@@ -90,7 +90,7 @@ class wechatCallbackapiTest
         //$msgType = "text";
         //$contentStr = "Welcome to wechat world!";
         //$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
-        $news=$this->replyNews($wechatLaolinObj->About($keyword));
+        $news=$this->replyNews(wechatLaolin::About($keyword));
         $resultStr= sprintf($tplNews, $fromUsername, $toUsername, $time, $news['n'], $news['str']);
         echo $resultStr;
       }else {
@@ -122,8 +122,13 @@ class wechatCallbackapiTest
     $n=count($items);
     $strItem='';
     foreach ($items as $value) {
-      $strItem.=sprintf($tplNewsItem,$value.Title,$value.Description,$value.PicUrl,$value.Url);
+      $strItem.=sprintf($tplNewsItem,
+        $value['Title'],$value['Description'],
+        $value['PicUrl'],$value['Url']);
     }
+    
+      error_log( "  #A# str=$strItem\n", 
+      3, dirname( __FILE__ ).'/../'.'logwx-'.TOKEN.'.log');
     $ret=array();
     $ret['n']=$n;
     $ret['str']=$strItem;
