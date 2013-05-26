@@ -77,8 +77,9 @@ class wechatCallbackapiTest
       
       
       
-      error_log(date("[Y-m-d H:i:s]")." -[".$_SERVER['REQUEST_URI']."] :".
+      error_log(date("[Y-m-d H:i:s")." ".$_SERVER['REQUEST_URI']."],".
       "u:$fromUsername,t:$inType,k:$keyword,e:$Event/n", 3, 
+       dirname( __FILE__ ).'/../'.'logwx-'.TOKEN.'.log');
       
       if($inType=='event') {
         $msgType = "text";
@@ -96,7 +97,6 @@ class wechatCallbackapiTest
         echo "Input something...";
       }
       
-       dirname( __FILE__ ).'/../'.'wx-'.TOKEN.'.log');
       
     }else {
         echo "<img src='http://files.laolin.com/images/qrcode_for_laolin-jg.jpg'/>";
