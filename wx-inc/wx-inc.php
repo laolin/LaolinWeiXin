@@ -9,7 +9,7 @@ if( !defined('TOKEN') )die('pls define TOKEN first.');
 
 $wechatObj = new wechatCallbackapiTest();
 
-if(isset( $_GET["echostr"]) {
+if(isset( $_GET["echostr"])) {
   $wechatObj->valid();
 } else {
   $wechatObj->responseMsg();
