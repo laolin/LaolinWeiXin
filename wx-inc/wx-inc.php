@@ -81,14 +81,15 @@ class wechatCallbackapiTest
       "u:$fromUsername,t:$inType,k:$keyword,e:$Event\n", 
       3, dirname( __FILE__ ).'/../'.'logwx-'.TOKEN.'.log');
       
+      
+      $contentStr = "欢迎关注老林的微信公众帐号。很高兴能通过这个平台与你交流。回复r1了解老林简历，也可回复r2至r9直接了解老林的其他介绍。";
+        
       if($inType=='event') {
         $msgType = "text";
-        $contentStr = "Thanks for your following (LaoLin-jg)!";
         $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
         echo $resultStr;
       }else if(/*$inType=='text' && */ !empty( $keyword )) {
         $msgType = "text";
-        $contentStr = "欢迎关注老林!回复laolin了解老林简历，也可回复r1至r9直接了解老林的有关介绍条目";
         $about=wechatLaolin::About($keyword);
         if(count($about)){
           $news=$this->replyNews($about);
