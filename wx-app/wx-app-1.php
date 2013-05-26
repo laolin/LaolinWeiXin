@@ -9,6 +9,9 @@ class wechatLaolin {
   }
   
   public function About($b) {  
+  
+      error_log(date(" b=$b, ", 
+      3, dirname( __FILE__ ).'/../'.'logwx-'.TOKEN.'.log');
     switch($b) {
         //使用lazyRest的API，直接读wordpress的指定 页面的数据
       case 'contact':
@@ -44,6 +47,10 @@ class wechatLaolin {
       Url	 点击图文消息跳转链接
       */
   function _showSomePost($query,$title){  
+  
+      error_log(date(" q=$query/n", 
+      3, dirname( __FILE__ ).'/../'.'logwx-'.TOKEN.'.log');
+      
     $url='http://api.laolin.com/rest/api/wp4_posts/list/'.$query;
 
     $rest=file_get_contents($url);
