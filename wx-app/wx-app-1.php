@@ -63,6 +63,7 @@ class wechatLaolin {
         $item=array();
         $item['Title']=$row['post_title'];
         $item['Description']=$row['post_content'];
+        $item['Url']='http://laolin.com/lin/?p='.$row['ID'];
         $dataPost[]=$item;
       }
     }
