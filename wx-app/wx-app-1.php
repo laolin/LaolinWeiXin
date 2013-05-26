@@ -19,8 +19,8 @@ class wechatLaolin {
       case 'projects':
         return $this->_showSomePost('ID=4161','工程项目');
         break;
-      careturn se 'awards':
-        $this->_showSomePost('ID=4163','获奖情况');
+      case 'awards':
+        return $this->_showSomePost('ID=4163','获奖情况');
         break;
       case 'publications':
         return $this->_showSomePost('ID=4165','发表论文');
