@@ -38,6 +38,7 @@ class wechatCallbackapiTest
       $toUsername = $postObj->ToUserName;
       $keyword = trim($postObj->Content);
       $inType= trim($postObj->MsgType);
+      $Event=($inType=='event')?trim($postObj->Event):'NotEvent';
       $time = time();
       $textTpl = "<xml>
             <ToUserName><![CDATA[%s]]></ToUserName>
@@ -76,6 +77,8 @@ class wechatCallbackapiTest
       
       
       
+      error_log(date("[Y-m-d H:i:s]")." -[".$_SERVER['REQUEST_URI']."] :".
+      "u:$fromUsername,t:$inType,k:$keyword,e:$Event/n", 3, 
       
       if($inType=='event') {
         $msgType = "text";
@@ -92,8 +95,6 @@ class wechatCallbackapiTest
       }else {
         echo "Input something...";
       }
-      error_log(date("[Y-m-d H:i:s]")." -[".$_SERVER['REQUEST_URI']."] :".
-      "u:$fromUsername,t:$inType,k:$keyword/n", 3, 
       
        dirname( __FILE__ ).'/../'.'wx-'.TOKEN.'.log');
       
