@@ -78,7 +78,7 @@ class wechatCallbackapiTest
       
       
       error_log(date("[Y-m-d H:i:s")." ".$_SERVER['REQUEST_URI']."],".
-      "u:$fromUsername,t:$inType,k:$keyword,e:$Event/n", 
+      "u:$fromUsername,t:$inType,k:$keyword,e:$Event\n", 
       3, dirname( __FILE__ ).'/../'.'logwx-'.TOKEN.'.log');
       
       if($inType=='event') {

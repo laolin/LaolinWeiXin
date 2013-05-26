@@ -48,7 +48,7 @@ class wechatLaolin {
       */
   function _showSomePost($query,$title){  
   
-      error_log( " q=$query/n", 
+      error_log( " q=$query\n", 
       3, dirname( __FILE__ ).'/../'.'logwx-'.TOKEN.'.log');
       
     $url='http://api.laolin.com/rest/api/wp4_posts/list/'.$query;
