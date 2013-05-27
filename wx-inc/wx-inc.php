@@ -98,8 +98,8 @@ class wechatCallbackapiTest
           $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
         }
         
-      error_log( "  #A# res=$resultStr\n", 
-      3, dirname( __FILE__ ).'/../'.'logwx-'.TOKEN.'.log');
+      //error_log( "  #A# res=$resultStr\n", 
+      //3, dirname( __FILE__ ).'/../'.'logwx-'.TOKEN.'.log');
         echo $resultStr;
       }else {
         echo "Input something...";
