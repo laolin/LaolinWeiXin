@@ -107,11 +107,8 @@ class wechatCallbackapiTest
       
       
     }else {
-        echo "        
-      <p style='font-size:2em'>
-      欢迎关注老林的微信公众帐号。
-      目前主要功能为结构工程师的一些常用的一些功能和老林自我介绍。 </p> 
-        <img src='http://files.laolin.com/images/qrcode_for_laolin-jg.jpg'/>";
+    
+        include_once ( dirname( __FILE__ ).'/../wx-app/'.'first-page.html');
         exit;
     }
   }
