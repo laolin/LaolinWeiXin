@@ -10,6 +10,10 @@ if( !defined('TOKEN') )die('pls define TOKEN first.');
 class wechatCallbackapiTest
 {
   //构造函数需要传入一个对象，来完成实际工作。
+  //这个对象需要定义三个函数
+  //1,showWebPage() 显示直接打开网址时显示的页面内容
+  //2,welcomeStr() 返回一个字符串，用于新用户关注时发送给新用户的消息
+  //3,run($content) 处理用户发来的消息内容，返回一个数组（表示回复news型消息）、字符串（表示回复text型消息。
   public  $workerObj;
   public function __construct($workerObj) {
      $this->workerObj = $workerObj;
@@ -83,19 +87,23 @@ class wechatCallbackapiTest
       
       
         
+      $contentStr = $this->workerObj->welcomeStr();
       if($inType=='event') {
-        $contentStr = $this->workerObj->welcomeStr();
         $msgType = "text";
         $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
         echo $resultStr;
-      }else if(/*$inType=='text' && */ !empty( $keyword )) {
+      }else if( !empty( $keyword ) ) {
         $msgType = "text";
-        //$about=wechatLaolin::About($keyword);
-        $about=$this->workerObj->run($keyword);
-        if(count($about)){
-          $news=$this->replyNews($about);
-          $resultStr= sprintf($tplNews, $fromUsername, $toUsername, $time, $news['n'], $news['str']);
-        }else{
+        $resData=$this->workerObj->run($keyword);
+        $resultStr='';
+        if(is_array ($resData)){
+          $newsCount=count($resData);
+          if($newsCount>0){
+            $newsStr= $this->itemsXMLString($resData);
+            $resultStr= sprintf($tplNews, $fromUsername, $toUsername, $time, $newsCount, $newsStr);
+          }
+        }
+        if($resultStr==''){
           $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
         }
         
@@ -108,14 +116,12 @@ class wechatCallbackapiTest
       
       
     }else {
-        
-        //include_once ( dirname( __FILE__ ).'/../wx-app/'.'first-page.html');
         $this->workerObj->showWebPage();
         exit;
     }
   }
     
-  private function replyNews($items) {
+  private function itemsXMLString($items) {
       /*
       Title	 图文消息标题
       Description	 图文消息描述
