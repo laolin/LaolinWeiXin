@@ -102,10 +102,12 @@ class wechatCallbackapiTest
             $resultStr= sprintf($tplNews, $fromUsername, $toUsername, $time, $newsCount, $newsStr);
           }
         }
-        if ($resultStr=='' && is_string($resData)&& $resData!=='') {
-          $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $resData);
-        } else {
-          $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $welcomeTxt);
+        if ($resultStr==''){
+          if( is_string($resData)&& $resData!=='') {
+            $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $resData);
+          } else {
+            $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $welcomeTxt);
+          }
         }
         
       //error_log( "  #A# res=$resultStr\n", 
