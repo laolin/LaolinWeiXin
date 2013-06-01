@@ -60,7 +60,7 @@ class wechatLaolin {
     }  
   }
   public function welcomeStr(){
-    return "欢迎关注老林的微信公众帐号。很高兴能通过这个平台与你交流。发送‘?’或‘0’获取帮助。";
+    return "欢迎关注老林的微信公众帐号。很高兴能通过这个平台与你交流。发送‘?’或‘0’获取帮助。\nby LaoLin( http://laolin.com/ )";
   }
 
   public function showWebPage(){
