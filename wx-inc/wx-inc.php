@@ -146,10 +146,7 @@ class wechatCallbackapiTest
     
      // error_log( "  #A# str=$strItem\n", 
      // 3, dirname( __FILE__ ).'/../'.'logwx-'.TOKEN.'.log');
-    $ret=array();
-    $ret['n']=$n;
-    $ret['str']=$strItem;
-    return $ret;
+    return $strItem;
 
   }
   private function checkSignature() {
