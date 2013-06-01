@@ -2,7 +2,18 @@
 
 
 class wechatLaolin {
+  protected $_str_Welcome="欢迎关注老林的微信公众帐号。很高兴能通过这个平台与你交流。";
+  protected $_str_Send0ForHelp='发送‘?’或‘0’获取帮助。';
+  protected $_str_ByLaolin="\n By: LaoLin( http://laolin.com/ ).";
   
+  protected $_str_CmdChg='不好意思，亲，操作命令已改变。';
+  protected $_str_SilenceIsGold="Speech is silver, silence is gold.\n\t :-)";
+  
+  protected $_str_Help=
+  "目前主要功能:\n【0】本帮助信息\n".
+    "【1】老林介绍(每次结果可能不一样哟)\n".
+    "详见 http://app.laolin.com/weixin/"
+    
   function __construct()
   {
   }
@@ -15,17 +26,14 @@ class wechatLaolin {
       'ID=4158',    'ID=4138',    'ID=4147',    'ID=4153',
       'ID=4161',    'ID=4163',    'ID=4165',    'ID=4180',
       'ID=4168'    );
-    $helpStr="目前主要功能:\n【0】本帮助信息\n".
-    "【1】老林介绍(每次结果可能不一样哟)\n".
-    "详见 http://app.laolin.com/weixin/";
     switch($content) {
       case '':
-        return "Speech is silver, silence is gold.\n\t :-)";
+        return $this->_str_SilenceIsGold;
       case '?':
       case '0':
       case 'help':
       case 'f1': case 'F1':
-        return $helpStr;
+        return $this->_str_Help;
       
       //===============================================
       //使用lazyRest的API，直接读wordpress的指定 页面的数据
@@ -48,19 +56,19 @@ class wechatLaolin {
       case '8':
       
       case '9':
-        return '这些命令暂时收回，请回复【0】了解可用命令，谢谢。';
+        return $this->_str_CmdChg.$this->_str_Send0ForHelp ;
         
       case 'laolin':      
         //使用lazyRest的API，直接读wordpress的指定page的全部子页面的数据
         //我的Wordpress的简历页面的ID为4132,这个页面内容没有用
         //所有的子页面对应简历的一个内容, 这些会由LazyREST api返回给本页面JSON数据
-        return  $this->_showSomePost('post_parent=4132&post_status=publish','林建萍(LaoLin) 同济大学建筑设计研究院（集团）有限公司 高级工程师 一级注册结构工程师');
+        return  $this->_showSomePost('post_parent=4132&post_status=publish');
       default: 
         return '';
     }  
   }
   public function welcomeStr(){
-    return "欢迎关注老林的微信公众帐号。很高兴能通过这个平台与你交流。发送‘?’或‘0’获取帮助。\nby LaoLin( http://laolin.com/ )";
+    return $this->_str_Welcome.$this->_str_Send0ForHelp.$this->_str_ByLaolin;
   }
 
   public function showWebPage(){
