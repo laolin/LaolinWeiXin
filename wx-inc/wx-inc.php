@@ -91,7 +91,7 @@ class wechatCallbackapiTest
       $welcomeTxt = $this->workerObj->welcomeStr();
       if($inType=='event') {
         $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, "text", $welcomeTxt);
-      } else if( !empty( $contents ) ) {
+      } else {
         $resData=$this->workerObj->run($contents);
         if(is_array ($resData)){
           $newsCount=count($resData);
@@ -110,12 +110,10 @@ class wechatCallbackapiTest
         
       //error_log( "  #A# res=$resultStr\n", 
       //3, dirname( __FILE__ ).'/../'.'logwx-'.TOKEN.'.log');
-      } else { //contents is empty
-          $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, "text", "Speech is silver, silence is gold.\n ----LaoLin :-)");
       }
       echo $resultStr;
 
-    }else { //no post data: 说明不是来自微信服务器的请求，而是来自人工的请求==>showWebPage
+    } else { //no post data: 说明不是来自微信服务器的请求，而是来自人工的请求==>showWebPage
         $this->workerObj->showWebPage();
     }
   }

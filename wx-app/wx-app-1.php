@@ -19,10 +19,12 @@ class wechatLaolin {
     回复1了解老林介绍(每次结果可能不一样哟)\n
     ";
     switch($content) {
-    
+      case '':
+        return "Speech is silver, silence is gold.\n :-)";
       case '0':
         return $helpStr;
-        
+      
+      //===============================================
       //使用lazyRest的API，直接读wordpress的指定 页面的数据
       case '1':
         $i=rand(0,8);
