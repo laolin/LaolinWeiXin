@@ -15,13 +15,16 @@ class wechatLaolin {
       'ID=4158',    'ID=4138',    'ID=4147',    'ID=4153',
       'ID=4161',    'ID=4163',    'ID=4165',    'ID=4180',
       'ID=4168'    );
-    $helpStr="回复0了解帮助信息\n
-    回复1了解老林介绍(每次结果可能不一样哟)\n
-    ";
+    $helpStr="目前主要功能:\n【0】本帮助信息\n".
+    "【1】老林介绍(每次结果可能不一样哟)\n"
+    "详见 http://app.laolin.com/weixin/";
     switch($content) {
       case '':
-        return "Speech is silver, silence is gold.\n :-)";
+        return "Speech is silver, silence is gold.\n\t :-)";
+      case '?':
       case '0':
+      case 'help':
+      case 'f1': case 'F1':
         return $helpStr;
       
       //===============================================
@@ -57,7 +60,7 @@ class wechatLaolin {
     }  
   }
   public function welcomeStr(){
-    return "欢迎关注老林的微信公众帐号。很高兴能通过这个平台与你交流。发送‘1’了解老林简历，发送‘2’至‘9’了解老林的其他介绍。";
+    return "欢迎关注老林的微信公众帐号。很高兴能通过这个平台与你交流。发送‘?’或‘0’获取帮助。";
   }
 
   public function showWebPage(){
