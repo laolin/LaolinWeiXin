@@ -7,7 +7,7 @@ class wechatLaolin {
   {
   }
   
-  static public function About($b) {  
+  public function run($b) {  
   
      // error_log( "  ## b=$b, ", 
      // 3, dirname( __FILE__ ).'/../'.'logwx-'.TOKEN.'.log');
@@ -71,7 +71,13 @@ class wechatLaolin {
         return array();
     }  
   }
+  public function welcomeStr(){
+    return "欢迎关注老林的微信公众帐号。很高兴能通过这个平台与你交流。发送‘1’了解老林简历，发送‘2’至‘9’了解老林的其他介绍。";
+  }
 
+  public function showWebPage(){
+    include_once ( dirname( __FILE__ ).'/'.'first-page.html');
+  }
   
       /*
       Title	 图文消息标题
@@ -79,7 +85,7 @@ class wechatLaolin {
       PicUrl	 图片链接，支持JPG、PNG格式，较好的效果为大图640*320，小图80*80。
       Url	 点击图文消息跳转链接
       */
-   static function _showSomePost($query,$title){  
+  public function _showSomePost($query,$title){  
   
      // error_log( " q=$query\n", 
      // 3, dirname( __FILE__ ).'/../'.'logwx-'.TOKEN.'.log');
@@ -111,4 +117,13 @@ class wechatLaolin {
 }
     
 include_once ( dirname( __FILE__ ).'/../wx-inc/'.'wx-inc.php');
+
+$workerObj = new wechatLaolin();
+$wechatObj = new wechatCallbackapiTest($workerObj);
+
+if(isset( $_GET["echostr"])) {
+  $wechatObj->valid();
+} else {
+  $wechatObj->responseMsg();
+}
 

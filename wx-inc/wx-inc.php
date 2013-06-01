@@ -7,15 +7,14 @@
 if( !defined('TOKEN') )die('pls define TOKEN first.');
 //  define("TOKEN", "defWeixinToken");//should be defined in 'wx-token.php'
 
-$wechatObj = new wechatCallbackapiTest();
-
-if(isset( $_GET["echostr"])) {
-  $wechatObj->valid();
-} else {
-  $wechatObj->responseMsg();
-}
 class wechatCallbackapiTest
 {
+  //构造函数需要传入一个对象，来完成实际工作。
+  public  $workerObj;
+  public function __construct($workerObj) {
+     $this->workerObj = $workerObj;
+  }
+
   public function valid() {
     $echoStr = $_GET["echostr"];
 
@@ -39,6 +38,7 @@ class wechatCallbackapiTest
       $keyword = trim($postObj->Content);
       $inType= trim($postObj->MsgType);
       $Event=($inType=='event')?trim($postObj->Event):'xE';
+      
       $time = time();
       $textTpl = "<xml>
             <ToUserName><![CDATA[%s]]></ToUserName>
@@ -82,15 +82,16 @@ class wechatCallbackapiTest
       3, dirname( __FILE__ ).'/../'.'logwx-'.TOKEN.'.log');
       
       
-      $contentStr = "欢迎关注老林的微信公众帐号。很高兴能通过这个平台与你交流。发送‘1’了解老林简历，发送‘2’至‘9’了解老林的其他介绍。";
         
       if($inType=='event') {
+        $contentStr = $this->workerObj->welcomeStr();
         $msgType = "text";
         $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
         echo $resultStr;
       }else if(/*$inType=='text' && */ !empty( $keyword )) {
         $msgType = "text";
-        $about=wechatLaolin::About($keyword);
+        //$about=wechatLaolin::About($keyword);
+        $about=$this->workerObj->run($keyword);
         if(count($about)){
           $news=$this->replyNews($about);
           $resultStr= sprintf($tplNews, $fromUsername, $toUsername, $time, $news['n'], $news['str']);
@@ -107,8 +108,9 @@ class wechatCallbackapiTest
       
       
     }else {
-    
-        include_once ( dirname( __FILE__ ).'/../wx-app/'.'first-page.html');
+        
+        //include_once ( dirname( __FILE__ ).'/../wx-app/'.'first-page.html');
+        $this->workerObj->showWebPage();
         exit;
     }
   }
@@ -162,5 +164,3 @@ class wechatCallbackapiTest
     }
   }
 }
-
-?>
