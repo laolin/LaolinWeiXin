@@ -7,60 +7,43 @@ class wechatLaolin {
   {
   }
   
-  public function run($b) {  
+  public function run($content) {  
   
      // error_log( "  ## b=$b, ", 
      // 3, dirname( __FILE__ ).'/../'.'logwx-'.TOKEN.'.log');
-    switch($b) {
-        //使用lazyRest的API，直接读wordpress的指定 页面的数据
-      
+    $laolinInfo=array(  
+      'ID=4158',    'ID=4138',    'ID=4147',    'ID=4153',
+      'ID=4161',    'ID=4163',    'ID=4165',    'ID=4180',
+      'ID=4168'    );
+    $helpStr="回复0了解帮助信息\n
+    回复1了解老林介绍(每次结果可能不一样哟)\n
+    ";
+    switch($content) {
+    
+      case '0':
+        return $helpStr;
+        
+      //使用lazyRest的API，直接读wordpress的指定 页面的数据
       case '1':
-      case 'r1':
-      case 'rq':
-        return $this->_showSomePost('ID=4158','');
+        $i=rand(0,8);
+        return $this->_showSomePost($laolinInfo[$i]);
       case '2':
-      case 'r2':
-      case 'rw':
-        return $this->_showSomePost('ID=4138','');
+      
       case '3':
-      case 'r3':
-      case 're':
-        return $this->_showSomePost('ID=4147','');
+      
       case '4':
-      case 'r4':
-      case 'rr':
-        return $this->_showSomePost('ID=4153','');
+      
       
       case '5':
-      case 'r5':
-      case 'rt':
-      case 'projects':
-        return $this->_showSomePost('ID=4161','工程项目');
-        break;
+      
       case '6':
-      case 'r6':
-      case 'ry':
-      case 'awards':
-        return $this->_showSomePost('ID=4163','获奖情况');
-        break;
+      
       case '7':
-      case 'r7':
-      case 'ru':
-      case 'publications':
-        return $this->_showSomePost('ID=4165','发表论文');
-        break;
+      
       case '8':
-      case 'r8':
-      case 'ri':
-      case 'hobbies':
-        return $this->_showSomePost('ID=4180','兴趣爱好');
       
       case '9':
-      case 'r9':
-      case 'ro':
-      case 'contact':
-        return $this->_showSomePost('ID=4168','联系方式');
-        break;
+        return '这些命令暂时收回，请回复【0】了解可用命令，谢谢。';
         
       case 'laolin':      
         //使用lazyRest的API，直接读wordpress的指定page的全部子页面的数据
