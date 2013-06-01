@@ -10,9 +10,9 @@ class wechatLaolin {
   protected $_str_SilenceIsGold="Speech is silver, silence is gold.\n\t :-)";
   
   protected $_str_Help=
-  "目前主要功能:\n【0】本帮助信息\n".
-    "【1】老林介绍(每次结果可能不一样哟)\n".
-    "详见 http://app.laolin.com/weixin/"
+  "目前主要功能:\n【0】本帮助信息\n
+【1】老林介绍(每次结果可能不一样哟)\n
+详见 http://app.laolin.com/weixin/";
     
   function __construct()
   {
