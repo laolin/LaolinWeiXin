@@ -68,7 +68,7 @@ class wechatLaolin {
         //所有的子页面对应简历的一个内容, 这些会由LazyREST api返回给本页面JSON数据
         return  $this->_showSomePost('post_parent=4132&post_status=publish','林建萍(LaoLin) 同济大学建筑设计研究院（集团）有限公司 高级工程师 一级注册结构工程师');
       default: 
-        return array();
+        return '';
     }  
   }
   public function welcomeStr(){

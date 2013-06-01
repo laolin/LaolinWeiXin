@@ -12,8 +12,8 @@ class wechatCallbackapiTest
   //构造函数需要传入一个对象，来完成实际工作。
   //这个对象需要定义三个函数
   //1,showWebPage() 显示直接打开网址时显示的页面内容
-  //2,welcomeStr() 返回一个字符串，用于新用户关注时发送给新用户的消息
-  //3,run($content) 处理用户发来的消息内容，返回一个数组（表示回复news型消息）、字符串（表示回复text型消息。
+  //2,welcomeStr() 返回一个字符串，用于新用户关注时发送给新用户的欢迎消息
+  //3,run($content) 处理用户发来的消息内容，返回一个非空数组（表示回复news型消息）或空数组（表示回复欢迎消息）、字符串（表示回复text型消息）。
   public  $workerObj;
   public function __construct($workerObj) {
      $this->workerObj = $workerObj;
@@ -39,7 +39,7 @@ class wechatCallbackapiTest
       $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
       $fromUsername = $postObj->FromUserName;
       $toUsername = $postObj->ToUserName;
-      $keyword = trim($postObj->Content);
+      $contents = trim($postObj->Content);
       $inType= trim($postObj->MsgType);
       $Event=($inType=='event')?trim($postObj->Event):'xE';
       
@@ -82,20 +82,19 @@ class wechatCallbackapiTest
       
       
       error_log(date("[Y-m-d H:i:s")." ".$_SERVER['REQUEST_URI']."],".
-      "u:$fromUsername,t:$inType,k:$keyword,e:$Event\n", 
+      "u:$fromUsername,t:$inType,k:$contents,e:$Event\n", 
       3, dirname( __FILE__ ).'/../'.'logwx-'.TOKEN.'.log');
       
       
         
-      $contentStr = $this->workerObj->welcomeStr();
+      $resultStr='';
+      $welcomeTxt = $this->workerObj->welcomeStr();
       if($inType=='event') {
         $msgType = "text";
-        $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
-        echo $resultStr;
-      }else if( !empty( $keyword ) ) {
+        $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $welcomeTxt);
+      } else if( !empty( $contents ) ) {
         $msgType = "text";
-        $resData=$this->workerObj->run($keyword);
-        $resultStr='';
+        $resData=$this->workerObj->run($contents);
         if(is_array ($resData)){
           $newsCount=count($resData);
           if($newsCount>0){
@@ -103,21 +102,21 @@ class wechatCallbackapiTest
             $resultStr= sprintf($tplNews, $fromUsername, $toUsername, $time, $newsCount, $newsStr);
           }
         }
-        if($resultStr==''){
-          $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
+        if ($resultStr=='' && is_string($resData)&& $resData!=='') {
+          $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $resData);
+        } else {
+          $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $welcomeTxt);
         }
         
       //error_log( "  #A# res=$resultStr\n", 
       //3, dirname( __FILE__ ).'/../'.'logwx-'.TOKEN.'.log');
-        echo $resultStr;
-      }else {
-        echo "Input something...";
+      } else { //contents is empty
+          $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, "Speech is silver, silence is gold.\n ----LaoLin :-)");
       }
-      
-      
-    }else {
+      echo $resultStr;
+
+    }else { //no post data: 说明不是来自微信服务器的请求，而是来自人工的请求==>showWebPage
         $this->workerObj->showWebPage();
-        exit;
     }
   }
     
