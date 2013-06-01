@@ -16,7 +16,7 @@ class wechatLaolin {
       'ID=4161',    'ID=4163',    'ID=4165',    'ID=4180',
       'ID=4168'    );
     $helpStr="目前主要功能:\n【0】本帮助信息\n".
-    "【1】老林介绍(每次结果可能不一样哟)\n"
+    "【1】老林介绍(每次结果可能不一样哟)\n".
     "详见 http://app.laolin.com/weixin/";
     switch($content) {
       case '':
