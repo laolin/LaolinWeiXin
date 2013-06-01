@@ -90,10 +90,8 @@ class wechatCallbackapiTest
       $resultStr='';
       $welcomeTxt = $this->workerObj->welcomeStr();
       if($inType=='event') {
-        $msgType = "text";
-        $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $welcomeTxt);
+        $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, "text", $welcomeTxt);
       } else if( !empty( $contents ) ) {
-        $msgType = "text";
         $resData=$this->workerObj->run($contents);
         if(is_array ($resData)){
           $newsCount=count($resData);
@@ -104,16 +102,16 @@ class wechatCallbackapiTest
         }
         if ($resultStr==''){
           if( is_string($resData)&& $resData!=='') {
-            $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $resData);
+            $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, "text", $resData);
           } else {
-            $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $welcomeTxt);
+            $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, "text", $welcomeTxt);
           }
         }
         
       //error_log( "  #A# res=$resultStr\n", 
       //3, dirname( __FILE__ ).'/../'.'logwx-'.TOKEN.'.log');
       } else { //contents is empty
-          $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, "Speech is silver, silence is gold.\n ----LaoLin :-)");
+          $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, "text", "Speech is silver, silence is gold.\n ----LaoLin :-)");
       }
       echo $resultStr;
 
