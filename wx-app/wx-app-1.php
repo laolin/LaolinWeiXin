@@ -15,8 +15,8 @@ class wechatLaolin {
   "目前主要功能:
 【0】本帮助信息
 【1】老林介绍(每次结果可能不一样哟)
-【TJAD】TJAD相关功能
- http://app.laolin.com/weixin/ ";
+【TJAD】TJAD相关功能";
+  protected $_str_URL="\n如有任何意见或建议请点击 http://laolin.com/lin/?p=4406 ，谢谢。";
     
   function __construct()
   {
@@ -37,7 +37,7 @@ class wechatLaolin {
       case '0':
       case 'help':
       case 'f1': case 'F1':
-        return $this->_str_Help;
+        return $this->_str_Help.$this->_str_URL;
       
       //===============================================
       //使用lazyRest的API，直接读wordpress的指定 页面的数据
@@ -83,7 +83,7 @@ class wechatLaolin {
     return '';
   }
   
-  protected $_str_Tjad_Usage="感谢使用TJAD工作号码查询。
+  protected $_str_Tjad_Usage="欢迎使用TJAD工作号码查询。
 **使用协议**
 ============
 为方便大家工作设计了此号码查询功能。
@@ -119,7 +119,7 @@ class wechatLaolin {
     
     $dat=str_replace($kickCharList,'',substr($content,4));
     if(strlen($dat)==0){
-      return $this->_str_Tjad_Usage;
+      return $this->_str_Tjad_Usage.$this->_str_URL;
     }
     if(is_numeric($dat)){//纯数字
       if(strlen($dat)<4){
