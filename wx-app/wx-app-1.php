@@ -16,7 +16,7 @@ class wechatLaolin {
 【0】本帮助信息
 【1】老林介绍(每次结果可能不一样哟)
 【TJAD】TJAD相关功能";
-  protected $_str_URL="\n如有任何意见或建议请点击 http://laolin.com/lin/?p=4406 ，谢谢。";
+  protected $_str_AppWebPageURL="\n如有任何意见或建议请点击 http://laolin.com/lin/?p=4406 ，谢谢。";
     
   function __construct()
   {
@@ -37,7 +37,7 @@ class wechatLaolin {
       case '0':
       case 'help':
       case 'f1': case 'F1':
-        return $this->_str_Help.$this->_str_URL;
+        return $this->_str_Help.$this->_str_AppWebPageURL;
       
       //===============================================
       //使用lazyRest的API，直接读wordpress的指定 页面的数据
@@ -60,7 +60,7 @@ class wechatLaolin {
       case '8':
       
       case '9':
-        return $this->_str_CmdChg.$this->_str_Send0ForHelp ;
+        return $this->_str_CmdChg.$this->_str_Send0ForHelp.$this->_str_AppWebPageURL ;
         
       case 'laolin':      
         //使用lazyRest的API，直接读wordpress的指定page的全部子页面的数据
@@ -69,7 +69,9 @@ class wechatLaolin {
         return  $this->_showSomePost('post_parent=4132&post_status=publish');
       default: 
         $ret=$this->run2($content);//复杂命令处理
-        return $ret===''?$this->_str_CmdUnknow.$this->_str_Send0ForHelp:$ret;
+        return $ret==='' ?
+          $this->_str_CmdUnknow.$this->_str_Send0ForHelp.$this->_str_AppWebPageURL :
+          $ret;
     }  
   }
   
@@ -102,24 +104,33 @@ class wechatLaolin {
 
 **继续查询表示你同意使用协议**";
   protected $_str_Tjad_TelTooShort="电话号码要求至少4位。";
+  protected $_str_Tjad_NameTooShort="输入的名字太短。";
   protected $_str_Tjad_Error="查询结果出错。";
   protected $_str_Tjad_NoResult="查不到任何结果。";
-  protected $_str_Tjad_QueryDataIs="本功能仅供内部测试使用。\n你查询的是：";
+  protected $_str_Tjad_QueryDataIs="你查询的是：";
   protected $_str_Tjad_TheResultIs="查询结果：";
   protected $_n_tjad_MaxResultCount=10;
-  protected $_str_tjad_MaxResultGot="\n最多只能返回10个结果。如有部分结果未能查到，请调整查询条件。";
+  protected $_str_tjad_MaxResultGot="\n已达到系统返回的最多结果数，如有部分结果未能查到，请调整查询条件。";
   
   
   
   //复杂命令处理 之 TJAD 系列
   protected function _func_Tjad($content) {  
-
-    $apiPath='http://api.laolin.com/rest/api/tjad_contact/list/';  
+  
     $kickCharList=array(" ","\t","\r","\n","\r","\v","\b",";","_",",",".","+","-","*","/",'\\',"'",'"');
     
-    $dat=str_replace($kickCharList,'',substr($content,4));
+    //'tjad99-_-林'  => get max to 99 results
+    if(substr($content,6,3)=='-_-'){//an easter egg ^_^
+      $this->_n_tjad_MaxResultCount=max(10,intval(substr($content,4,2)));
+      $dat=str_replace($kickCharList,'',substr($content,9));
+    } else {//正常情况都是这样：
+      $dat=str_replace($kickCharList,'',substr($content,4));
+    }
+    $apiPath='http://api.laolin.com/rest/api/tjad_contact/list/count='.
+      $this->_n_tjad_MaxResultCount.'&';
+    
     if(strlen($dat)==0){
-      return $this->_str_Tjad_Usage.$this->_str_URL;
+      return $this->_str_Tjad_Usage.$this->_str_AppWebPageURL;
     }
     if(is_numeric($dat)){//纯数字
       if(strlen($dat)<4){
@@ -127,6 +138,9 @@ class wechatLaolin {
       }
       $apiUrl=$apiPath."tel=$dat";
     } else {
+      if(mb_strlen($dat,'utf8')<=1&& $this->_n_tjad_MaxResultCount<=10){
+        return $this->_str_Tjad_NameTooShort;
+      }
       $apiUrl=$apiPath."name=$dat";
     }
     
@@ -136,8 +150,10 @@ class wechatLaolin {
         return $this->_str_Tjad_NoResult."($dat)";
       }
       $txt=$this->_str_Tjad_QueryDataIs.$dat;
+      $i=0;
       foreach ($ret['data']['items'] as $key => $row) {
-        $txt.="\n ".$row['dep'].'，'.$row['jg'].'，'.$row['name'].':'.$row['tel'];
+        $i++;
+        $txt.="\n$i.".$row['dep'].','.$row['jg'].','.$row['name'].':'.$row['tel'];
       }
       if($numberResult>=$this->_n_tjad_MaxResultCount) {
         $txt.=$this->_str_tjad_MaxResultGot;
@@ -145,7 +161,7 @@ class wechatLaolin {
     } else {
       return $this->_str_Tjad_Error.'('.$ret['err_msg'].')';
     }
-    return $txt;
+    return $txt.$this->_str_AppWebPageURL;
   }
   
   //
