@@ -14,7 +14,7 @@ class wechatLaolin {
   protected $_str_Help=
   "目前主要功能:
 【0】本帮助信息
-【1】老林介绍(每次结果可能不一样哟)
+【1】随机显示老林的介绍内容
 【TJAD】TJAD相关功能";
   protected $_str_AppWebPageURL="\n如有任何意见或建议请点击 http://laolin.com/lin/?p=4406 ，谢谢。";
     
