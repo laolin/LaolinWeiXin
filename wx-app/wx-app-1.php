@@ -33,7 +33,8 @@ class wechatLaolin {
     switch($content) {
       case '':
         return $this->_str_SilenceIsGold;
-      case '?':
+      /*
+	  case '?':
       case '0':
       case 'help':
       case 'f1': case 'F1':
@@ -67,8 +68,10 @@ class wechatLaolin {
         //我的Wordpress的简历页面的ID为4132,这个页面内容没有用
         //所有的子页面对应简历的一个内容, 这些会由LazyREST api返回给本页面JSON数据
         return  $this->_showSomePost('post_parent=4132&post_status=publish');
-      default: 
-        $ret=$this->run2($content);//复杂命令处理
+      
+	  */
+	  default: 
+        //$ret=$this->run2($content);//复杂命令处理
         return $ret==='' ?
           $this->_str_CmdUnknow.$this->_str_Send0ForHelp.$this->_str_AppWebPageURL :
           $ret;
