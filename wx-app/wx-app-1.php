@@ -4,7 +4,7 @@
 class wechatLaolin {
   
   protected $_str_Welcome="欢迎关注老林的微信公众帐号。很高兴能通过这个平台与你交流。";
-  protected $_str_Send0ForHelp='发送‘?’或‘0’获取帮助。';
+  protected $_str_Send0ForHelp='';//发送‘?’或‘0’获取帮助。';
   protected $_str_ByLaolin="\n By: LaoLin( http://laolin.com/ ).";
   
   protected $_str_CmdUnknow='亲，未能识别的命令。';
